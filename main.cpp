@@ -44,6 +44,7 @@ public:
 	S second() const; // { return _second; }
 };
 
+// Methods definition outside the class
 template <typename F, typename S>
 F Pair<F, S>::first() const { return _first; }
 
@@ -58,9 +59,13 @@ template <typename T>
 class StringValuePair : public Pair<std::string, T> {
 
 public:
-	StringValuePair(const std::string& str, const T& second) : Pair<std::string, T>(str, second) {}
+	StringValuePair(const std::string& str, const T& second); // : Pair<std::string, T>(str, second) {}
 	~StringValuePair() override {}
 };
+
+// Constructor definition outside the class
+template <typename T>
+StringValuePair<T>::StringValuePair(const std::string& str, const T& second) : Pair<std::string, T>(str, second) {}
 
 //////////////////////////////////////////
 //	5.4
@@ -194,6 +199,7 @@ int main() {
 	StringValuePair<float> svp2("Amazing", 5.3f);
 	std::cout << "Pair: " << svp2.first() << ' ' << svp2.second() << '\n';
 
+	// Trying the base class pointer
 	Pair<std::string, std::string>* svp3 = new StringValuePair<std::string>("Amaizing", "string");
 	std::cout << "Pair: " << svp3->first() << ' ' << svp3->second() << '\n';
 	delete svp3;
